@@ -1,17 +1,43 @@
 security:
+    enable_authenticator_manager: true
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
+        #App\Entity\User: 'auto'
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
         users_in_memory: { memory: null }
+        app_user_provider:
+            entity:
+                class: App\Entity\Client
+                property: email
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
+        # api:
+        #     pattern: ^/api
+        #     stateless: true
+        #     #username_path: email
+        #     #provider: app_user_provider            
+        #     jwt: ~
         main:
             lazy: true
-            provider: users_in_memory
+            provider: app_user_provider
+
+            json_login:
+                #stateless: true
+                check_path: api_login
+                #username_path: security.credentials.email
+                #password_path: security.credentials.password
+                #username_path: email
+                #password_path: password
+                #check_path: /api/login_check
+                
+                #success_handler: lexik_jwt_authentication.handler.authentication_success
+                #failure_handler: lexik_jwt_authentication.handler.authentication_failure
+                
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall

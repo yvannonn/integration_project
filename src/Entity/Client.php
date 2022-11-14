@@ -2,10 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\ClientRepository;
+use ApiPlatform\Metadata\Post;
+use App\State\ClientProcessor;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ClientRepository;
+use ApiPlatform\Metadata\ApiResource;
 
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
+#[ApiResource]
+#[Post(processor:ClientProcessor::class)]
 class Client extends SubUsers
 {
 

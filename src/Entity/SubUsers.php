@@ -3,6 +3,9 @@
 namespace App\Entity;
 
 use App\Entity\User;
+use App\Entity\Client;
+
+use App\Entity\Entreprise;
 use App\Entity\Transaction;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ClientRepository;
@@ -15,6 +18,7 @@ use Doctrine\ORM\Mapping\DiscriminatorColumn;
 use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: SubUsersRepository::class)]
+
 #[InheritanceType('JOINED')]
 #[DiscriminatorColumn(name: 'type', type: 'string')]
 #[DiscriminatorMap(['subUsers' => SubUsers::class, 'client' => Client::class, 'entreprise' => Entreprise::class])]
@@ -32,10 +36,7 @@ abstract class SubUsers extends User
         $this->transactions = new ArrayCollection();
     }
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+    
 
     public function getSolde(): ?float
     {

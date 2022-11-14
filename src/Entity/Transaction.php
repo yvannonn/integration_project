@@ -2,10 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\TransactionRepository;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiResource;
+use App\Repository\TransactionRepository;
+
 
 #[ORM\Entity(repositoryClass: TransactionRepository::class)]
+#[ApiResource]
 class Transaction
 {
 
@@ -18,7 +21,8 @@ class Transaction
     
     #[ORM\Column(length: 255)]
     #[ORM\OneToOne(targetEntity: client::class)]
-    #[ORM\JoinColumn(name: 'client', referencedColumnName: 'id')]    private ?int $client_id = null;
+    #[ORM\JoinColumn(name: 'client', referencedColumnName: 'id')]    
+    private ?int $client_id = null;
 
     #[ORM\Column]
     private ?float $montant = null;    

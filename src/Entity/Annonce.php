@@ -2,17 +2,33 @@
 
 namespace App\Entity;
 
-use App\Repository\AnnonceRepository;
+
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiResource;
+use App\Repository\AnnonceRepository;
+use Symfony\Component\Validator\Constraints\Length;
 
 #[ORM\Entity(repositoryClass: AnnonceRepository::class)]
+#[ApiResource]
 class Annonce
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $title = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $content = null;
+
+    #[ORM\Column]
+    private ?int $prix_click = null;
+
+    #[ORM\Column]
+    private ?float $budget = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $date_debut = null;
@@ -23,11 +39,10 @@ class Annonce
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $duree = null;
 
-    #[ORM\Column]
-    private ?float $budget = null;
+   
+   
 
-    #[ORM\Column]
-    private ?int $valeur = null;
+    
 
     public function getId(): ?int
     {
@@ -81,15 +96,40 @@ class Annonce
 
         return $this;
     }
+    
 
-    public function getValeur(): ?int
+    public function getTitle(): ?string
     {
-        return $this->valeur;
+        return $this->title;
     }
 
-    public function setValeur(int $valeur): self
+    public function setTitle(string $title): self
     {
-        $this->valeur = $valeur;
+        $this->title = $title;
+
+        return $this;
+    }
+
+    public function getContent(): ?string
+    {
+        return $this->content;
+    }
+
+    public function setContent(string $content): self
+    {
+        $this->content = $content;
+
+        return $this;
+    }
+
+    public function getPrixClick(): ?int
+    {
+        return $this->prix_click;
+    }
+
+    public function setPrixClick(int $prix_click): self
+    {
+        $this->prix_click = $prix_click;
 
         return $this;
     }
